@@ -45,11 +45,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -156,7 +156,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CTPhieuMuonsController.cs" />
+    <Compile Include="Controllers\CTPhieuTrasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoaiDocGiasController.cs" />
+    <Compile Include="Controllers\LoaiSachesController.cs" />
+    <Compile Include="Controllers\NhaXuatBansController.cs" />
+    <Compile Include="Controllers\PhieuLapThesController.cs" />
+    <Compile Include="Controllers\PhieuMuonSachesController.cs" />
+    <Compile Include="Controllers\PhieuThuTienPhatsController.cs" />
+    <Compile Include="Controllers\PhieuTraSachesController.cs" />
+    <Compile Include="Controllers\SachesController.cs" />
+    <Compile Include="Controllers\TacGiasController.cs" />
+    <Compile Include="Controllers\TheDocGiasController.cs" />
     <Compile Include="DAL\StoreContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -220,6 +232,66 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\CTPhieuMuons\Create.cshtml" />
+    <Content Include="Views\CTPhieuMuons\Delete.cshtml" />
+    <Content Include="Views\CTPhieuMuons\Details.cshtml" />
+    <Content Include="Views\CTPhieuMuons\Edit.cshtml" />
+    <Content Include="Views\CTPhieuMuons\Index.cshtml" />
+    <Content Include="Views\LoaiDocGias\Create.cshtml" />
+    <Content Include="Views\LoaiDocGias\Delete.cshtml" />
+    <Content Include="Views\LoaiDocGias\Details.cshtml" />
+    <Content Include="Views\LoaiDocGias\Edit.cshtml" />
+    <Content Include="Views\LoaiDocGias\Index.cshtml" />
+    <Content Include="Views\CTPhieuTras\Create.cshtml" />
+    <Content Include="Views\CTPhieuTras\Delete.cshtml" />
+    <Content Include="Views\CTPhieuTras\Details.cshtml" />
+    <Content Include="Views\CTPhieuTras\Edit.cshtml" />
+    <Content Include="Views\CTPhieuTras\Index.cshtml" />
+    <Content Include="Views\LoaiSaches\Create.cshtml" />
+    <Content Include="Views\LoaiSaches\Delete.cshtml" />
+    <Content Include="Views\LoaiSaches\Details.cshtml" />
+    <Content Include="Views\LoaiSaches\Edit.cshtml" />
+    <Content Include="Views\LoaiSaches\Index.cshtml" />
+    <Content Include="Views\NhaXuatBans\Create.cshtml" />
+    <Content Include="Views\NhaXuatBans\Delete.cshtml" />
+    <Content Include="Views\NhaXuatBans\Details.cshtml" />
+    <Content Include="Views\NhaXuatBans\Edit.cshtml" />
+    <Content Include="Views\NhaXuatBans\Index.cshtml" />
+    <Content Include="Views\PhieuLapThes\Create.cshtml" />
+    <Content Include="Views\PhieuLapThes\Delete.cshtml" />
+    <Content Include="Views\PhieuLapThes\Details.cshtml" />
+    <Content Include="Views\PhieuLapThes\Edit.cshtml" />
+    <Content Include="Views\PhieuLapThes\Index.cshtml" />
+    <Content Include="Views\PhieuMuonSaches\Create.cshtml" />
+    <Content Include="Views\PhieuMuonSaches\Delete.cshtml" />
+    <Content Include="Views\PhieuMuonSaches\Details.cshtml" />
+    <Content Include="Views\PhieuMuonSaches\Edit.cshtml" />
+    <Content Include="Views\PhieuMuonSaches\Index.cshtml" />
+    <Content Include="Views\PhieuThuTienPhats\Create.cshtml" />
+    <Content Include="Views\PhieuThuTienPhats\Delete.cshtml" />
+    <Content Include="Views\PhieuThuTienPhats\Details.cshtml" />
+    <Content Include="Views\PhieuThuTienPhats\Edit.cshtml" />
+    <Content Include="Views\PhieuThuTienPhats\Index.cshtml" />
+    <Content Include="Views\PhieuTraSaches\Create.cshtml" />
+    <Content Include="Views\PhieuTraSaches\Delete.cshtml" />
+    <Content Include="Views\PhieuTraSaches\Details.cshtml" />
+    <Content Include="Views\PhieuTraSaches\Edit.cshtml" />
+    <Content Include="Views\PhieuTraSaches\Index.cshtml" />
+    <Content Include="Views\Saches\Create.cshtml" />
+    <Content Include="Views\Saches\Delete.cshtml" />
+    <Content Include="Views\Saches\Details.cshtml" />
+    <Content Include="Views\Saches\Edit.cshtml" />
+    <Content Include="Views\Saches\Index.cshtml" />
+    <Content Include="Views\TacGias\Create.cshtml" />
+    <Content Include="Views\TacGias\Delete.cshtml" />
+    <Content Include="Views\TacGias\Details.cshtml" />
+    <Content Include="Views\TacGias\Edit.cshtml" />
+    <Content Include="Views\TacGias\Index.cshtml" />
+    <Content Include="Views\TheDocGias\Create.cshtml" />
+    <Content Include="Views\TheDocGias\Delete.cshtml" />
+    <Content Include="Views\TheDocGias\Details.cshtml" />
+    <Content Include="Views\TheDocGias\Edit.cshtml" />
+    <Content Include="Views\TheDocGias\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
