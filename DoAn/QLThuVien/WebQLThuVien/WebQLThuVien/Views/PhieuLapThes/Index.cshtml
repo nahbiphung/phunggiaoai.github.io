@@ -18,7 +18,7 @@
         <th>
             @Html.DisplayNameFor(model => model.HoVaTen)
         </th>
-        <th>
+        <th>          
             @Html.DisplayNameFor(model => model.NgaySinh)
         </th>
         <th>
@@ -62,3 +62,5 @@
 }
 
 </table>
+<br /><br />
+<a class="btn btn-success" href="@Url.Action("exportReport")">Dowload Report</a>

@@ -193,10 +193,21 @@
     <Compile Include="Models\ThamSo.cs" />
     <Compile Include="Models\TheDocGia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DataSetPhieuLapThe.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetPhieuLapThe.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DataSetSach.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSetSach.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportPhieuLapThe.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportPhieuLapThe.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\ReportSach.cs">
       <AutoGen>True</AutoGen>
@@ -221,6 +232,17 @@
     </Content>
     <Content Include="Reports\DataSetSach.xsc">
       <DependentUpon>DataSetSach.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\DataSetPhieuLapThe.xsc">
+      <DependentUpon>DataSetPhieuLapThe.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSetPhieuLapThe.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetPhieuLapThe.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSetPhieuLapThe.xss">
+      <DependentUpon>DataSetPhieuLapThe.xsd</DependentUpon>
     </Content>
     <None Include="Reports\DataSetSach.xsd">
       <SubType>Designer</SubType>
@@ -332,6 +354,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\ReportPhieuLapThe.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportPhieuLapThe.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\ReportSach.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReportSach.cs</LastGenOutput>

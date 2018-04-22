@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -20,6 +22,35 @@ namespace WebQLThuVien.Controllers
             return View(db.PhieuLapThes.ToList());
         }
 
+        //Làm nút bấm xuất
+        public ActionResult exportReport()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "ReportPhieuLapThe.rpt"));
+            rd.SetDataSource(db.PhieuLapThes.Select(plt => new
+            {
+                TenTK = plt.TenTK,
+                MatKhau = plt.MatKhau,
+                HoVaTen = plt.HoVaTen,
+                NgaySinh = plt.NgaySinh,
+                DiaChi = plt.DiaChi,
+                Email = plt.Email,
+                NgayLapThe = plt.NgayLapThe,               
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "application/pdf", "List_PhieuLapThe.pdf");
+            }
+            catch
+            {
+                throw;
+            }
+        }
         // GET: PhieuLapThes/Details/5
         public ActionResult Details(string id)
         {

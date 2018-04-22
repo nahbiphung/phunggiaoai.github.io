@@ -27,7 +27,7 @@ namespace WebQLThuVien.Models
         [StringLength(50)]
         public string HoVaTen { get; set; }
 
-        public DateTime? NgaySinh { get; set; }
+        public DateTime NgaySinh { get; set; }
 
         [StringLength(50)]
         public string DiaChi { get; set; }
@@ -35,7 +35,7 @@ namespace WebQLThuVien.Models
         [StringLength(50)]
         public string Email { get; set; }
 
-        public DateTime? NgayLapThe { get; set; }
+        public DateTime NgayLapThe { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TheDocGia> TheDocGias { get; set; }
