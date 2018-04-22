@@ -1,0 +1,35 @@
+﻿@model WebQLThuVien.Models.TheDocGia
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TheDocGia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiDocGia.TenLoai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiDocGia.TenLoai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhieuLapThe.MatKhau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhieuLapThe.MatKhau)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaTheDocGia }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

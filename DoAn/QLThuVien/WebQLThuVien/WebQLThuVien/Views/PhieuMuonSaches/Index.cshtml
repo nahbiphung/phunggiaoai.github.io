@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebQLThuVien.Models.PhieuMuonSach>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TheDocGia.TenTK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayMuon)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TheDocGia.TenTK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayMuon)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieuMuon }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaPhieuMuon }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaPhieuMuon })
+        </td>
+    </tr>
+}
+
+</table>
