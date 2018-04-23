@@ -185,5 +185,9 @@ insert into Sach(MaSach, TenSach, MaLoaiSach, MaTacGia, MaNhaXuatBan, NamXuatBan
 insert into Sach(MaSach, TenSach, MaLoaiSach, MaTacGia, MaNhaXuatBan, NamXuatBan, NgayNhap, TriGia, SoLuong) values (N'VH001', N'Van Hoc lop 1', 5, 6, 1,' 05/07/2017', '07/14/2017', 200000, 13)
 insert into Sach(MaSach, TenSach, MaLoaiSach, MaTacGia, MaNhaXuatBan, NamXuatBan, NgayNhap, TriGia, SoLuong) values (N'VH002', N'Van Hoc lop 2', 5, 7, 8, '02/23/2017', '09/08/2017', 300000, 12)
 
-
+--PhieuMuonSach
+insert into PhieuMuonSach(MaTheDocGia, NgayMuon) values ('V001', '1/2/2018')
+insert into PhieuMuonSach(MaTheDocGia, NgayMuon) values ('V001', '3/2/2018')
+insert into PhieuMuonSach(MaTheDocGia, NgayMuon) values ('V002', '2/2/2018')
+insert into PhieuMuonSach(MaTheDocGia, NgayMuon) values ('V003', '5/2/2018')
  
