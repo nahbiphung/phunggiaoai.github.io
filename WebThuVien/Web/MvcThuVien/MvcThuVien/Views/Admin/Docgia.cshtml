@@ -1,0 +1,74 @@
+﻿@using MvcThuVien.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<MvcThuVien.Models.TheDocGia>
+
+@{
+    ViewBag.Title = "Docgia";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    <h2>QUẢN LÝ THÔNG TIN ĐỌC GIẢ</h2>
+
+    <p>
+        @Html.ActionLink("THÊM MỚI", "Themmoidocgia")
+    </p>
+    <table class="table">
+        <tr>
+            <th style="width:200px">Họ tên</th>
+            <th style="width:120px">Tài khoản</th>
+            <th style="width:120px">Mật khẩu</th>
+            <th style="width:120px">Email</th>
+            <th style="width:120px">Địa chỉ</th>
+            <th style="width:120px">Điện thoại</th>
+            <th style="width:120px">Ngày sinh</th>
+            <th style="width:120px">Ngày lập thẻ</th>
+            <th style="width:200px"></th>           
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaiKhoan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MatKhau)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiachiKH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DienthoaiKH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ngaysinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ngaylapthe)
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "Suadocgia", new { id = item.MaTheDocGia }) |
+                    @Html.ActionLink("Chi tiết", "Chitietdocgia", new { id = item.MaTheDocGia }) |
+                    @Html.ActionLink("Xóa", "Xoadocgia", new { id = item.MaTheDocGia })
+                </td>
+            </tr>
+        }
+
+    </table>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount;
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Docgia", new { page = page }))
+    </div>
+    <style>
+        .MenuTrang li {
+            display: inline;
+        }
+    </style>
+</div>

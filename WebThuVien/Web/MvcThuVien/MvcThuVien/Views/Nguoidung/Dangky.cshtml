@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Dangky";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class='form animated flipInX' style="width:400px;">
+    <table align="center">
+        <h2 style="text-align:center">ĐĂNG KÝ THẺ ĐỌC GIẢ</h2>
+        <h4 style="color:red;text-align:center">
+            @ViewData["Loi1"] 
+            @ViewData["Loi2"]
+            @ViewData["Loi3"]
+            @ViewData["Loi4"] 
+            @ViewData["Loi5"]
+            @ViewData["Loi6"]
+            @ViewData["Loi7"]
+        </h4>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <tr style="height:40px">
+                <td>Họ tên đọc giả :</td>
+                <td>
+                    @Html.TextBox("HotenKH")                   
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td>Tên đăng nhập :</td>
+                <td>
+                    @Html.TextBox("TenDN")                   
+            </tr>
+            <tr style="height:40px">
+                <td>Mật khẩu :</td>
+                <td>
+                    @Html.Password("Matkhau")               
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td>Nhập lại mật khẩu :</td>
+                <td>
+                    @Html.Password("Matkhaunhaplai")                   
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td>Email :</td>
+                <td>
+                    @Html.TextBox("Email")                  
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td>Địa chỉ :</td>
+                <td>
+                    @Html.TextBox("Diachi")
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td>Điện thoại :</td>
+                <td>
+                    @Html.TextBox("Dienthoai")                   
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td>Ngày sinh :</td>
+                <td>
+                    <input type="date" name="Ngaysinh" />
+                </td>
+            </tr>
+            <tr style="height:40px">
+                <td></td>
+                <td>
+                    <button class='animated infinite pulse'>Đăng ký</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

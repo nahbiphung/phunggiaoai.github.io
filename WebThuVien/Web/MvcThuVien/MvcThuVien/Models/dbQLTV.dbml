@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLTV" Class="dbQLTVDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-2FGBCIC\SQLEXPRESS;Initial Catalog=QLTV;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLTVConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CTPhieuMuon" Member="CTPhieuMuons">
+    <Type Name="CTPhieuMuon">
+      <Column Name="MaPhieuMuon" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaSach" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="PhieuMuonSach_CTPhieuMuon" Member="PhieuMuonSach" ThisKey="MaPhieuMuon" OtherKey="MaPhieuMuon" Type="PhieuMuonSach" IsForeignKey="true" />
+      <Association Name="Sach_CTPhieuMuon" Member="Sach" ThisKey="MaSach" OtherKey="MaSach" Type="Sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Khoa" Member="Khoas">
+    <Type Name="Khoa">
+      <Column Name="MaKhoa" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenKhoa" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Khoa_Sach" Member="Saches" ThisKey="MaKhoa" OtherKey="MaKhoa" Type="Sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhieuMuonSach" Member="PhieuMuonSaches">
+    <Type Name="PhieuMuonSach">
+      <Column Name="MaPhieuMuon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaTheDocGia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayMuon" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NgayTra" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="PhieuMuonSach_CTPhieuMuon" Member="CTPhieuMuons" ThisKey="MaPhieuMuon" OtherKey="MaPhieuMuon" Type="CTPhieuMuon" />
+      <Association Name="TheDocGia_PhieuMuonSach" Member="TheDocGia" ThisKey="MaTheDocGia" OtherKey="MaTheDocGia" Type="TheDocGia" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sach" Member="Saches">
+    <Type Name="Sach">
+      <Column Name="MaSach" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenSach" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AnhBia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NgayCapNhat" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaKhoa" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Sach_CTPhieuMuon" Member="CTPhieuMuons" ThisKey="MaSach" OtherKey="MaSach" Type="CTPhieuMuon" />
+      <Association Name="Khoa_Sach" Member="Khoa" ThisKey="MaKhoa" OtherKey="MaKhoa" Type="Khoa" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TheDocGia" Member="TheDocGias">
+    <Type Name="TheDocGia">
+      <Column Name="MaTheDocGia" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TaiKhoan" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="MatKhau" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DiachiKH" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DienthoaiKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ngaysinh" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Ngaylapthe" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="TheDocGia_PhieuMuonSach" Member="PhieuMuonSaches" ThisKey="MaTheDocGia" OtherKey="MaTheDocGia" Type="PhieuMuonSach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Admin" Member="Admins">
+    <Type Name="Admin">
+      <Column Name="UserAdmin" Type="System.String" DbType="VarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PassAdmin" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Hoten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,308 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using MvcThuVien.Models;
+using PagedList;
+using System.IO;
+
+namespace MvcThuVien.Controllers
+{
+    public class AdminController : Controller
+    {
+        dbQLTVDataContext data = new dbQLTVDataContext();
+        // GET: Admin
+        public ActionResult Index()
+        {
+            if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(FormCollection collection)
+        {
+            var tendn = collection["TenDN"];
+            var matkhau = collection["Matkhau"];
+            if (String.IsNullOrEmpty(tendn))
+            {
+                ViewData["Loi1"] = "Bạn phải nhập tên đăng nhập";
+            }
+            else if (String.IsNullOrEmpty(matkhau))
+            {
+                ViewData["Loi2"] = "Bạn phải nhập mật khẩu";
+            }
+            else
+            {
+                Admin ad = data.Admins.SingleOrDefault(n => n.UserAdmin == tendn && n.PassAdmin == matkhau);
+                if (ad != null)
+                {
+                    Session["TaikhoanAdmin"] = ad;
+                    Session["TenNguoiDung"] = tendn;
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                {
+                    ViewBag.Thongbao = "Tên đăng nhập hoặc mật khẩu không đúng";
+                }
+            }
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            Session["TaiKhoanAdmin"] = null;
+            Session["TenNguoiDung"] = null;
+
+            return RedirectToAction("Index", "Admin");
+        }
+        #region Sach
+        public ActionResult Sach(int? page)
+        {
+            if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            int pageNumber = (page ?? 1);
+            int pageSize = 7;
+            return View(data.Saches.ToList().OrderBy(n => n.MaSach).ToPagedList(pageNumber, pageSize));
+        }
+        [HttpGet]
+        public ActionResult ThemmoiSach()
+        {
+            ViewBag.MaKhoa = new SelectList(data.Khoas.ToList().OrderBy(n => n.TenKhoa), "MaKhoa", "TenKhoa");
+            return View();
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        //upload hình ảnh
+        public ActionResult ThemmoiSach(Sach sach, HttpPostedFileBase fileUpload)
+        {
+            ViewBag.MaKhoa = new SelectList(data.Khoas.ToList().OrderBy(n => n.TenKhoa), "MaKhoa", "TenKhoa");
+            if (fileUpload == null)
+            {
+                ViewBag.Thongbao = "Vui lòng chọn ảnh bìa";
+                return View();
+            }
+            //Themvao CSDL
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    //luu ten file
+                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    //luu duong dan
+                    var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                    //kiem tra hinh tonm tai chua
+                    if (System.IO.File.Exists(path))
+                    {
+                        ViewBag.Thongbao = "Hình ảnh đã tồn tại";
+                    }
+                    else
+                    {
+                        //Luu hinh vao duong dan
+                        fileUpload.SaveAs(path);
+                    }
+                    sach.AnhBia = fileName;
+                    //luu vao CSDL
+                    data.Saches.InsertOnSubmit(sach);
+                    data.SubmitChanges();
+                }
+                return RedirectToAction("Sach");
+            }
+        }
+        public ActionResult Chitietsach(int id)
+        {
+            Sach sach = data.Saches.SingleOrDefault(n => n.MaSach == id);
+            ViewBag.Masach = sach.MaSach;
+            if (sach == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(sach);
+        }
+        //xoasach
+        [HttpGet]
+        public ActionResult Xoasach(int id)
+        {
+            Sach sach = data.Saches.SingleOrDefault(n => n.MaSach == id);
+            ViewBag.Masach = sach.MaSach;
+            if (sach == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(sach);
+        }
+        [HttpPost, ActionName("Xoasach")]
+        public ActionResult Xacnhanxoa(int id)
+        {
+            Sach sach = data.Saches.SingleOrDefault(n => n.MaSach == id);
+            ViewBag.Masach = sach.MaSach;
+            if (sach == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            data.Saches.DeleteOnSubmit(sach);
+            data.SubmitChanges();
+            return RedirectToAction("Sach");
+        }
+        [HttpGet]
+        public ActionResult Suasach(int id)
+        {
+            Sach sach = data.Saches.SingleOrDefault(n => n.MaSach == id);
+            //ViewBag.Masach = sach.MaSach;
+            if (sach == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            ViewBag.MaKhoa = new SelectList(data.Khoas.ToList().OrderBy(n => n.TenKhoa), "MaKhoa", "TenKhoa", sach.MaKhoa);
+            return View(sach);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Suasach(Sach sach, HttpPostedFileBase fileUpload)
+        {
+            ViewBag.MaKhoa = new SelectList(data.Khoas.ToList().OrderBy(n => n.TenKhoa), "MaKhoa", "TenKhoa");
+            if (sach == null)
+            {
+                ViewBag.Thongbao = "Vui lòng chọn ảnh bìa";
+                return View();
+            }
+            //Themvao CSDL
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    //luu ten file
+                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    //luu duong dan
+                    var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                    //kiem tra hinh tonm tai chua
+                    if (System.IO.File.Exists(path))
+                    {
+                        ViewBag.Thongbao = "Hình ảnh đã tồn tại";
+                    }
+                    else
+                    {
+                        //Luu hinh vao duong dan
+                        fileUpload.SaveAs(path);
+                    }
+
+                    Sach thisbook = data.Saches.SingleOrDefault(n => n.MaSach == sach.MaSach);
+                    thisbook.TenSach = sach.TenSach;
+                    thisbook.MaSach = sach.MaSach;
+                    thisbook.MaKhoa = sach.MaKhoa;
+                    thisbook.NgayCapNhat = sach.NgayCapNhat;
+                    thisbook.SoLuong = sach.SoLuong;
+                    thisbook.AnhBia = fileName;
+
+                    data.SubmitChanges();
+                }
+                return RedirectToAction("Sach");
+            }
+        }
+        #endregion
+        #region DocGia
+        public ActionResult Docgia(int? page)
+        {
+            if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            int pageNumber = (page ?? 1);
+            int pageSize = 7;
+            return View(data.TheDocGias.ToList().OrderBy(n => n.MaTheDocGia).ToPagedList(pageNumber, pageSize));
+        }
+        [HttpGet]
+        public ActionResult Themmoidocgia()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Themmoidocgia(TheDocGia tdg)
+        {
+            data.TheDocGias.InsertOnSubmit(tdg);
+            data.SubmitChanges();
+            return RedirectToAction("Docgia");
+        }
+        public ActionResult Chitietdocgia(int id)
+        {
+            TheDocGia tdg = data.TheDocGias.SingleOrDefault(n => n.MaTheDocGia == id);
+            ViewBag.MaTheDocGia = tdg.MaTheDocGia;
+            if (tdg == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(tdg);
+        }
+        [HttpGet]
+        public ActionResult Xoadocgia(int id)
+        {
+            TheDocGia tdg = data.TheDocGias.SingleOrDefault(n => n.MaTheDocGia == id);
+            ViewBag.MaTheDocGia = tdg.MaTheDocGia;
+            if (tdg == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(tdg);
+        }
+        [HttpPost, ActionName("Xoadocgia")]
+        public ActionResult Xacnhanxoadocgia(int id)
+        {
+            TheDocGia tdg = data.TheDocGias.SingleOrDefault(n => n.MaTheDocGia == id);
+            ViewBag.MaTheDocGia = tdg.MaTheDocGia;
+            if (tdg == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            data.TheDocGias.DeleteOnSubmit(tdg);
+            data.SubmitChanges();
+            return RedirectToAction("Docgia");
+        }
+        [HttpGet]
+        public ActionResult Suadocgia(int id)
+        {
+            TheDocGia tdg = data.TheDocGias.SingleOrDefault(n => n.MaTheDocGia == id);
+            //ViewBag.Masach = sach.MaSach;
+            if (tdg == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(tdg);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Suadocgia(TheDocGia tdg, HttpPostedFileBase fileUpload)
+        {
+            TheDocGia thisthe = data.TheDocGias.SingleOrDefault(n => n.MaTheDocGia == tdg.MaTheDocGia);
+            thisthe.MaTheDocGia = tdg.MaTheDocGia;
+            thisthe.HoTen = tdg.HoTen;
+            thisthe.TaiKhoan = tdg.TaiKhoan;
+            thisthe.MatKhau = tdg.MatKhau;
+            thisthe.DiachiKH = tdg.DiachiKH;
+            thisthe.Email = tdg.Email;
+            thisthe.DienthoaiKH = tdg.DienthoaiKH;
+            thisthe.Ngaysinh = tdg.Ngaysinh;
+            thisthe.Ngaylapthe = tdg.Ngaylapthe;
+            data.SubmitChanges();
+            return RedirectToAction("Docgia");
+
+        }
+        #endregion
+    }
+}
