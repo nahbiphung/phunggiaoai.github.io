@@ -11,7 +11,7 @@ namespace MvcThuVien.Controllers
 {
     public class AdminController : Controller
     {
-        dbQLTVDataContext data = new dbQLTVDataContext();
+        ModelTV data = new ModelTV();
         // GET: Admin
         public ActionResult Index()
         {
@@ -111,8 +111,8 @@ namespace MvcThuVien.Controllers
                     }
                     sach.AnhBia = fileName;
                     //luu vao CSDL
-                    data.Saches.InsertOnSubmit(sach);
-                    data.SubmitChanges();
+                    data.Saches.Add(sach);
+                    data.SaveChanges();
                 }
                 return RedirectToAction("Sach");
             }
@@ -151,8 +151,8 @@ namespace MvcThuVien.Controllers
                 Response.StatusCode = 404;
                 return null;
             }
-            data.Saches.DeleteOnSubmit(sach);
-            data.SubmitChanges();
+            data.Saches.Remove(sach);
+            data.SaveChanges();
             return RedirectToAction("Sach");
         }
         [HttpGet]
@@ -206,7 +206,7 @@ namespace MvcThuVien.Controllers
                     thisbook.SoLuong = sach.SoLuong;
                     thisbook.AnhBia = fileName;
 
-                    data.SubmitChanges();
+                    data.SaveChanges();
                 }
                 return RedirectToAction("Sach");
             }
@@ -232,8 +232,8 @@ namespace MvcThuVien.Controllers
         [ValidateInput(false)]
         public ActionResult Themmoidocgia(TheDocGia tdg)
         {
-            data.TheDocGias.InsertOnSubmit(tdg);
-            data.SubmitChanges();
+            data.TheDocGias.Add(tdg);
+            data.SaveChanges();
             return RedirectToAction("Docgia");
         }
         public ActionResult Chitietdocgia(int id)
@@ -269,8 +269,8 @@ namespace MvcThuVien.Controllers
                 Response.StatusCode = 404;
                 return null;
             }
-            data.TheDocGias.DeleteOnSubmit(tdg);
-            data.SubmitChanges();
+            data.TheDocGias.Remove(tdg);
+            data.SaveChanges();
             return RedirectToAction("Docgia");
         }
         [HttpGet]
@@ -299,9 +299,64 @@ namespace MvcThuVien.Controllers
             thisthe.DienthoaiKH = tdg.DienthoaiKH;
             thisthe.Ngaysinh = tdg.Ngaysinh;
             thisthe.Ngaylapthe = tdg.Ngaylapthe;
-            data.SubmitChanges();
+            data.SaveChanges();
             return RedirectToAction("Docgia");
 
+        }
+        #endregion
+        #region PhieuMuon
+        public ActionResult PhieuMuon(int? page)
+        {
+            if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            int pageNumber = (page ?? 1);
+            int pageSize = 7;
+            return View(data.PhieuMuonSaches.ToList().OrderBy(n => n.MaPhieuMuon).ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult ChitietPhieumuon(int id)
+        {           
+            PhieuMuonSach pms = data.PhieuMuonSaches.SingleOrDefault(n => n.MaPhieuMuon == id);
+            ViewBag.MaPhieuMuon = pms.MaPhieuMuon;
+            if (pms == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(pms);
+        }
+        [HttpGet]
+        public ActionResult XoaPhieumuon(int id)
+        {
+            PhieuMuonSach pms = data.PhieuMuonSaches.SingleOrDefault(n => n.MaPhieuMuon == id);
+            ViewBag.MaPhieuMuon = pms.MaPhieuMuon;
+            if (pms == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(pms);
+        }
+        [HttpPost, ActionName("XoaPhieumuon")]
+        public ActionResult XacnhanxoaPhieumuon(int id)
+        {
+            PhieuMuonSach pms = data.PhieuMuonSaches.SingleOrDefault(n => n.MaPhieuMuon == id);
+            ViewBag.MaPhieuMuon = pms.MaPhieuMuon;
+            if (pms == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            data.PhieuMuonSaches.Remove(pms);
+            data.SaveChanges();
+            return RedirectToAction("PhieuMuon");
+        }
+        #endregion
+        #region CTPhieuMuon
+        public ActionResult CTPhieuMuon()
+        {             
+            return View();
         }
         #endregion
     }

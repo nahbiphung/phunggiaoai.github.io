@@ -1,0 +1,85 @@
+﻿@model MvcThuVien.Models.PhieuMuonSach
+
+@{
+    ViewBag.Title = "ChitietPhieumuon";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <h2>THÔNG TIN CHI TIẾT PHIẾU MƯỢN</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Mã phiếu mượn :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MaPhieuMuon)
+            </dd>
+
+            <dt>
+                Tên đọc giả :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TheDocGia.HoTen)
+            </dd>
+
+            <dt>
+                Ngày mượn :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NgayMuon)
+            </dd>
+
+            <dt>
+                Ngày trả :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NgayTra)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("VỀ TRANG QUẢN LÝ PHIẾU MƯỢN", "PhieuMuon")
+    </p>
+    <table>
+        <tr>
+            <th style="width:200px">
+                Mã phiếu mượn
+            </th>
+            <th style="width:200px">
+                Tên sách
+            </th>
+            <th style="width:200px">
+                Số lượng 
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.CTPhieuMuons)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhieuMuonSach.MaPhieuMuon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sach.TenSach)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

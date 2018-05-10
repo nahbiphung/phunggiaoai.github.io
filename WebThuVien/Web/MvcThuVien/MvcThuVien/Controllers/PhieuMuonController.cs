@@ -9,7 +9,7 @@ namespace MvcThuVien.Controllers
 {
     public class PhieuMuonController : Controller
     {
-        dbQLTVDataContext data = new dbQLTVDataContext();
+        ModelTV data = new ModelTV();
         //Lay gio hang
         public List<Phieumuon> LayPhieumuon()
         {
@@ -133,17 +133,17 @@ namespace MvcThuVien.Controllers
             pms.MaTheDocGia = kh.MaTheDocGia;
             pms.NgayMuon = DateTime.Now;
             pms.NgayTra = DateTime.Now.AddDays(7);
-            data.PhieuMuonSaches.InsertOnSubmit(pms);
-            data.SubmitChanges();
+            data.PhieuMuonSaches.Add(pms);
+            data.SaveChanges();
             foreach (var item in lstPhieumuon)
             {
                 CTPhieuMuon ctpm = new CTPhieuMuon();
                 ctpm.MaPhieuMuon = pms.MaPhieuMuon;
                 ctpm.MaSach = item.iMasach;
                 ctpm.SoLuong = item.iSoluong;                
-                data.CTPhieuMuons.InsertOnSubmit(ctpm);
+                data.CTPhieuMuons.Add(ctpm);
             }
-            data.SubmitChanges();
+            data.SaveChanges();
             Session["Phieumuon"] = null;
             return RedirectToAction("XacnhanPhieumuon", "Phieumuon");
         }

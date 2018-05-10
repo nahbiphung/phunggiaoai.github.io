@@ -89,6 +89,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -204,25 +206,23 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NguoidungController.cs" />
     <Compile Include="Controllers\PhieuMuonController.cs" />
     <Compile Include="Controllers\ThuVienController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\dbQLTV.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbQLTV.dbml</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\CTPhieuMuon.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Khoa.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ModelTV.cs" />
     <Compile Include="Models\Phieumuon.cs" />
+    <Compile Include="Models\PhieuMuonSach.cs" />
+    <Compile Include="Models\Sach.cs" />
+    <Compile Include="Models\TheDocGia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -246,10 +246,115 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\10-phut-hoc-tieng-han.jpg" />
+    <Content Include="Images\10-quy-luat.jpg" />
+    <Content Include="Images\13-nguyen-tac.gif" />
+    <Content Include="Images\200-kanji.jpg" />
+    <Content Include="Images\2000-tu-vung.jpg" />
+    <Content Include="Images\600 Essential Words For The Toeic.jpg" />
+    <Content Include="Images\7-thoi-quen-hieu-qua-195x300.gif" />
+    <Content Include="Images\Adobe Indesign.jpg" />
+    <Content Include="Images\bai-giang-QHQT.jpg" />
+    <Content Include="Images\Bia-Bao-cao-thuong-nien-2016.jpg" />
+    <Content Include="Images\Biasach.jpg" />
+    <Content Include="Images\Bush-va-quyen-luc-nuoc-my.jpg" />
+    <Content Include="Images\cam-nang-ve-dich-vu-khach-san-nha-hang-184x300.jpg" />
+    <Content Include="Images\Chien-thang-con-quy.gif" />
+    <Content Include="Images\chinh-tri-luan-ebook-200x300.jpg" />
+    <Content Include="Images\Chinh-tri-the-gioi-sau-nam-1945.jpg" />
+    <Content Include="Images\CNTT va TTVN.jpg" />
+    <Content Include="Images\Codes At Work.png" />
+    <Content Include="Images\Computer Networks.jpg" />
+    <Content Include="Images\Cu-hich.jpg" />
+    <Content Include="Images\dansu.jpg" />
+    <Content Include="Images\datdai.jpg" />
+    <Content Include="Images\datdai2013.jpg" />
+    <Content Include="Images\dauthau.jpg" />
+    <Content Include="Images\doc-hieu.jpg" />
+    <Content Include="Images\dung-viec-sach-ebook-171x300.gif" />
+    <Content Include="Images\duong-vao-nghe-kinh-doanh-khach-san-197x300.jpg" />
+    <Content Include="Images\duongloi.jpg" />
+    <Content Include="Images\English Gramma To Use.jpg" />
+    <Content Include="Images\English Gramma.JPG" />
+    <Content Include="Images\Essential Worlds For The Ielts.jpg" />
     <Content Include="Images\footer-bg.jpg" />
+    <Content Include="Images\giai-thich-ngu-phap-tieng-anh.png" />
+    <Content Include="Images\giai-thich-ngu-phap.jpg" />
+    <Content Include="Images\Giao-tiep-tieng-han.jpg" />
+    <Content Include="Images\giao-trinh-QHQT.jpg" />
+    <Content Include="Images\giao-trinh-so-cap-nhat.jpg" />
+    <Content Include="Images\giaotrinhquantrikinhdoanhtap1.jpg" />
+    <Content Include="Images\hanhchinh.jpg" />
+    <Content Include="Images\hethong.jpg" />
+    <Content Include="Images\hinhsu.jpg" />
+    <Content Include="Images\hoc-danh-van.jpg" />
+    <Content Include="Images\hoi-ky-chinh-tri-mahamad-201x300.gif" />
     <Content Include="Images\home-bg.jpg" />
+    <Content Include="Images\hop-tac-o-bien-dong.jpg" />
+    <Content Include="Images\hotel-management-and-operations-239x300.jpg" />
+    <Content Include="Images\HTML.jpg" />
+    <Content Include="Images\Huong-dan-atuocad.jpg" />
+    <Content Include="Images\huong-dan-php-mysql.jpg" />
+    <Content Include="Images\img171_9.jpg" />
+    <Content Include="Images\Java.jpg" />
+    <Content Include="Images\Kheo-an-noi.jpg" />
+    <Content Include="Images\ki-nang-ban-hang.jpg" />
+    <Content Include="Images\ki-nang-quan-li.jpg" />
+    <Content Include="Images\lanh-dao.jpg" />
+    <Content Include="Images\lich-su-qhqt.jpg" />
+    <Content Include="Images\luyen-tap-toefl.jpg" />
+    <Content Include="Images\luyen-thi-toeic-750.jpg" />
+    <Content Include="Images\luyen-thi-toelf.jpg" />
+    <Content Include="Images\Mastering Skills Toefl iBT.jpg" />
+    <Content Include="Images\mba.jpg" />
+    <Content Include="Images\microsoft excel 2016.jpg" />
+    <Content Include="Images\mot-so-li-luan.jpg" />
+    <Content Include="Images\nghe-thuat-quan-tri.jpg" />
+    <Content Include="Images\Nguoi-dan-ba-quyen-luc.gif" />
+    <Content Include="Images\nguoi-nam-cham-sach-ebook-190x300.jpg" />
+    <Content Include="Images\nha-quan-tri-thanh-cong.jpg" />
+    <Content Include="Images\noi-tieng-anh-theo-chu-de.jpg" />
+    <Content Include="Images\phan-tich-tai-chinh.jpg" />
+    <Content Include="Images\phasan.jpg" />
+    <Content Include="Images\PHP.png" />
+    <Content Include="Images\practical-hotel-management-200x300.jpg" />
+    <Content Include="Images\Programming In C.png" />
+    <Content Include="Images\quan-gia.jpg" />
+    <Content Include="Images\quan-he-viet- nam-hoa-ki.jpg" />
+    <Content Include="Images\quan-li-du-an-cntt.jpg" />
+    <Content Include="Images\quan-li-hanh-chinh-nha-nuoc.jpg" />
+    <Content Include="Images\quan-li-tai-chinh.jpg" />
+    <Content Include="Images\quan-tri-hoc-trong-xu-the.JPG" />
+    <Content Include="Images\quan-tri-kinh-doanh-cao-hoc.jpg" />
+    <Content Include="Images\quan-tri-kinh-doanh-khach-san.jpg" />
+    <Content Include="Images\quan-tri-kinh-doanh.jpg" />
+    <Content Include="Images\quan-tri-nguon-nhan-luc.jpg" />
     <Content Include="Images\sach.png" />
+    <Content Include="Images\tam-li.jpg" />
     <Content Include="Images\thu-vien.jpg" />
+    <Content Include="Images\thuc-day-quan-he.jpg" />
+    <Content Include="Images\thuc-hanh-tieng-han.jpg" />
+    <Content Include="Images\Thue-2018.jpg" />
+    <Content Include="Images\tieng-han-cho-nguoi-viet.jpg" />
+    <Content Include="Images\tieng-han-dulichlaodong.jpg" />
+    <Content Include="Images\tieng-han-tong-hop.jpg" />
+    <Content Include="Images\tieng-nhat-cho-moi-nguoi.jpg" />
+    <Content Include="Images\tieng-nhat-so-cap.jpg" />
+    <Content Include="Images\ton-giao-va-qhqt.jpg" />
+    <Content Include="Images\Tony-Blair-hanh-trinh-chinh-tri.gif" />
+    <Content Include="Images\tri-tue.jpg" />
+    <Content Include="Images\Triet-hoc-chinh-tri.jpg" />
+    <Content Include="Images\triet-hoc-dong-phuong.jpg" />
+    <Content Include="Images\tu-dien-anh-anh-viet.jpg" />
+    <Content Include="Images\tu-dien-tieng-Han.jpg" />
+    <Content Include="Images\tu-duy-nhanh-va-cham-233x300.jpg" />
+    <Content Include="Images\tu-hoc-tieng-Han.jpg" />
+    <Content Include="Images\tu-hoc-tieng-Nhat.jpg" />
+    <Content Include="Images\ung-dung-cntt.jpg" />
+    <Content Include="Images\van-pham-anh-ngu.jpg" />
+    <Content Include="Images\viet-tieng-Nhat.jpg" />
+    <Content Include="Images\Visual Basis 6.jpg" />
+    <Content Include="Images\Worldpess For Web Developers.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -262,11 +367,6 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="Models\dbQLTV.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>dbQLTV.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\assets\less\style.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom.js" />
@@ -369,7 +469,9 @@
     <Content Include="tinymce\js\tinymce\themes\modern\theme.min.js" />
     <Content Include="tinymce\js\tinymce\tinymce.min.js" />
     <Content Include="tinymce\LICENSE.TXT" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -383,24 +485,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
@@ -439,6 +523,10 @@
     <Content Include="Views\Admin\Chitietdocgia.cshtml" />
     <Content Include="Views\Admin\Xoadocgia.cshtml" />
     <Content Include="Views\Admin\Suadocgia.cshtml" />
+    <Content Include="Views\Admin\PhieuMuon.cshtml" />
+    <Content Include="Views\Admin\ChitietPhieumuon.cshtml" />
+    <Content Include="Views\Admin\XoaPhieumuon.cshtml" />
+    <Content Include="Views\Admin\CTPhieuMuon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -453,11 +541,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\dbQLTV.dbml.layout">
-      <DependentUpon>dbQLTV.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

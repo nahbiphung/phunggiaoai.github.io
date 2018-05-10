@@ -9,7 +9,7 @@ namespace MvcThuVien.Controllers
 {
     public class NguoidungController : Controller
     {
-        dbQLTVDataContext data = new dbQLTVDataContext();
+        ModelTV data = new ModelTV();
         // GET: Nguoidung
         [HttpGet]
         public ActionResult Dangky()
@@ -66,8 +66,8 @@ namespace MvcThuVien.Controllers
                 kh.DienthoaiKH = dienthoai;
                 kh.Ngaysinh = DateTime.Parse(ngaysinh);
                 kh.Ngaylapthe = DateTime.Now;
-                data.TheDocGias.InsertOnSubmit(kh);
-                data.SubmitChanges();
+                data.TheDocGias.Add(kh);
+                data.SaveChanges();
                 return RedirectToAction("Dangnhap");
             }
             return this.Dangky();

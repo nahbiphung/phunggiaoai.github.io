@@ -7,7 +7,7 @@ namespace MvcThuVien.Models
 {    
     public class Phieumuon
     {
-        dbQLTVDataContext data = new dbQLTVDataContext();
+        ModelTV data = new ModelTV();
         public int iMasach { get; set; }
         public string sTensach { get; set; }
         public string sAnhbia { get; set; }

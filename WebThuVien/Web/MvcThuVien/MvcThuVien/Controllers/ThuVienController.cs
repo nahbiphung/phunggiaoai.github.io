@@ -10,7 +10,7 @@ namespace MvcThuVien.Controllers
 {
     public class ThuVienController : Controller
     {
-        dbQLTVDataContext data = new dbQLTVDataContext();
+        ModelTV data = new ModelTV();
         private List<Sach> Laysachmoi(int count)
         {
             return data.Saches.OrderByDescending(a => a.NgayCapNhat).Take(count).ToList();

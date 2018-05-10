@@ -1,0 +1,62 @@
+﻿@using MvcThuVien.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<MvcThuVien.Models.PhieuMuonSach>
+
+@{
+    ViewBag.Title = "PhieuMuon";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <h2>QUẢN LÝ THÔNG TIN PHIẾU MƯỢN SÁCH</h2>
+    
+    <table class="table">
+        <tr>
+            <th style="width:200px">
+                Mã phiếu mượn
+            </th>
+            <th style="width:200px">
+                Tên đọc giả
+            </th>
+            <th style="width:200px">
+                Ngày mượn
+            </th>
+            <th style="width:200px">
+                Ngày trả
+            </th>
+            <th style="width:200px"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaPhieuMuon)
+                </td>  
+                <td>
+                    @Html.DisplayFor(modelItem => item.TheDocGia.HoTen)
+                </td>             
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayMuon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayTra)
+                </td>
+                <td>
+                    @Html.ActionLink("CHI TIẾT", "ChitietPhieumuon", new { id = item.MaPhieuMuon }) |
+                    @Html.ActionLink("XÓA", "XoaPhieumuon", new { id = item.MaPhieuMuon })
+                </td>
+            </tr>
+        }
+
+    </table>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount;
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("PhieuMuon", new { page = page }))
+    </div>
+    <style>
+        .MenuTrang li {
+            display: inline;
+        }
+    </style>   
+</div>
