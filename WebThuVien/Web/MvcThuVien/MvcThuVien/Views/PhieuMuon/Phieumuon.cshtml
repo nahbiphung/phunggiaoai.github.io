@@ -53,8 +53,8 @@
         <tr>
             <th>Sách</th>
             <th>Số lượng</th>
-            <th></th>
-            <th></th>
+            <th>Action (Edit)</th>
+            <th>Action (Xóa)</th>
         </tr>
     </thead>
     <tbody>
@@ -78,7 +78,8 @@
                         <input type="submit" class="btn btn-success" value="Cập Nhật" />
                     </td>
                     <td class="col-sm-1 col-md-1">
-                        @Html.ActionLink("Xóa", "XoaPhieumuon", new { @iMaSP = item.iMasach })
+                        <a href="@Url.Action("XoaPhieumuon","Phieumuon", new { @iMaSP = item.iMasach })"><input type="button" value="Xóa" class="btn btn-warning" /></a>
+                        @*@Html.ActionLink("Xóa", "XoaPhieumuon", new { @iMaSP = item.iMasach })*@
                     </td>
                 }
             </tr>

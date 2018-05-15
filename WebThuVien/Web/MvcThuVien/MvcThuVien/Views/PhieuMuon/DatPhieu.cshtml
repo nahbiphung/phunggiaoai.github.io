@@ -40,7 +40,7 @@
     <thead>
         <tr>
             <th>Sách</th>
-            <th>Số lượng</th>
+            <th style="text-align:right">Số lượng</th>
         </tr>
     </thead>
     <tbody>
@@ -57,7 +57,7 @@
                 </td>
                 @using (Html.BeginForm("CapnhatPhieumuon", "Phieumuon", new { @iMaSP = item.iMasach }))
                 {
-                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                    <td class="col-sm-1 col-md-1" style="text-align: right; color:red;font-weight:bold">
                         @item.iSoluong
                     </td>
                 }
@@ -66,8 +66,8 @@
     </tbody>
     <tfoot>
         <tr>
-            <td><h5>Số lượng sách :</h5></td>
-            <td class="text-right"><h5><strong>@ViewBag.Tongsoluong</strong></h5></td>
+            <td><h5 style="color:red;font-weight:bold;">Số lượng sách :</h5></td>
+            <td class="text-right" style="color:red;font-weight:bold;"><h5><strong>@ViewBag.Tongsoluong</strong></h5></td>
         </tr>
         <tr>
             <td></td>

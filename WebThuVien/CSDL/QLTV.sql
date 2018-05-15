@@ -198,19 +198,6 @@ CREATE TABLE Admin
 (
 	UserAdmin varchar(30) PRIMARY KEY,
 	PassAdmin varchar(30) NOT NULL,
+	Permission BIT NOT NULL,
 	Hoten nvarchar(50)
 )
-GO
-INSERT INTO dbo.Admin
-        ( UserAdmin, PassAdmin, Hoten )
-VALUES  ( 'admin', -- UserAdmin - varchar(30)
-          '123456', -- PassAdmin - varchar(30)
-          N'Phùng Gia Oai'  -- Hoten - nvarchar(50)
-          )
-INSERT INTO dbo.Admin
-        ( UserAdmin, PassAdmin, Hoten )
-VALUES  ( 'user', -- UserAdmin - varchar(30)
-          '654321', -- PassAdmin - varchar(30)
-          N'ABC'  -- Hoten - nvarchar(50)
-          )
-GO

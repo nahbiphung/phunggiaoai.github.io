@@ -66,9 +66,18 @@ namespace MvcThuVien.Controllers
                 kh.DienthoaiKH = dienthoai;
                 kh.Ngaysinh = DateTime.Parse(ngaysinh);
                 kh.Ngaylapthe = DateTime.Now;
-                data.TheDocGias.Add(kh);
-                data.SaveChanges();
-                return RedirectToAction("Dangnhap");
+                var query = from tdn in data.TheDocGias where tdn.TaiKhoan == kh.TaiKhoan select tdn;
+                if (query.Count() > 0)
+                {
+                    ViewBag.ThongBaoLoi = "Tài khoản đã có người đăng kí";
+                    return this.Dangky();
+                }
+                else
+                {
+                    data.TheDocGias.Add(kh);
+                    data.SaveChanges();
+                    return RedirectToAction("Dangnhap");
+                }
             }
             return this.Dangky();
         }

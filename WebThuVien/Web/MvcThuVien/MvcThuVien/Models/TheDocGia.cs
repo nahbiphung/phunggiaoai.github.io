@@ -26,7 +26,7 @@ namespace MvcThuVien.Models
         public string TaiKhoan { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(50)]     
         public string MatKhau { get; set; }
 
         [StringLength(100)]
@@ -36,6 +36,7 @@ namespace MvcThuVien.Models
         public string DiachiKH { get; set; }
 
         [StringLength(50)]
+        //[RegularExpression("")]
         public string DienthoaiKH { get; set; }
 
         public DateTime? Ngaysinh { get; set; }

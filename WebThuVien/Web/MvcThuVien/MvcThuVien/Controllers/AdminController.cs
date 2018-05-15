@@ -11,7 +11,7 @@ namespace MvcThuVien.Controllers
 {
     public class AdminController : Controller
     {
-        ModelTV data = new ModelTV();
+        private ModelTV data = new ModelTV();
         // GET: Admin
         public ActionResult Index()
         {
@@ -46,7 +46,15 @@ namespace MvcThuVien.Controllers
                 {
                     Session["TaikhoanAdmin"] = ad;
                     Session["TenNguoiDung"] = tendn;
-                    return RedirectToAction("Index", "Admin");
+                    if(ad.Permission == true)
+                    {
+                        Session["rule"] = true;//admin
+                    }
+                    else
+                    {
+                        Session["rule"] = false;// nhan vien
+                    }
+                    return RedirectToAction("Sach", "Admin");
                 }
                 else
                 {
@@ -57,21 +65,23 @@ namespace MvcThuVien.Controllers
         }
         public ActionResult Logout()
         {
-            Session["TaiKhoanAdmin"] = null;
-            Session["TenNguoiDung"] = null;
-
-            return RedirectToAction("Index", "Admin");
+            //Session["TaikhoanAdmin"] = null;
+            //Session["TenNguoiDung"] = null;
+            //Session["rule"] = null;
+            Session.Clear();
+            return RedirectToAction("Login", "Admin");          
         }
         #region Sach
-        public ActionResult Sach(int? page)
+        public ActionResult Sach(/*int? page*/)
         {
             if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
             {
                 return RedirectToAction("Login", "Admin");
             }
-            int pageNumber = (page ?? 1);
-            int pageSize = 7;
-            return View(data.Saches.ToList().OrderBy(n => n.MaSach).ToPagedList(pageNumber, pageSize));
+            //int pageNumber = (page ?? 1);
+            //int pageSize = 7;
+            //return View(data.Saches.ToList().OrderBy(n => n.MaSach).ToPagedList(pageNumber, pageSize));
+            return View(data.Saches.ToList());
         }
         [HttpGet]
         public ActionResult ThemmoiSach()
@@ -213,15 +223,16 @@ namespace MvcThuVien.Controllers
         }
         #endregion
         #region DocGia
-        public ActionResult Docgia(int? page)
+        public ActionResult Docgia(/*int? page*/)
         {
             if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
             {
                 return RedirectToAction("Login", "Admin");
             }
-            int pageNumber = (page ?? 1);
-            int pageSize = 7;
-            return View(data.TheDocGias.ToList().OrderBy(n => n.MaTheDocGia).ToPagedList(pageNumber, pageSize));
+            //int pageNumber = (page ?? 1);
+            //int pageSize = 7;
+            //return View(data.TheDocGias.ToList().OrderBy(n => n.MaTheDocGia).ToPagedList(pageNumber, pageSize));
+            return View(data.TheDocGias.ToList());
         }
         [HttpGet]
         public ActionResult Themmoidocgia()
@@ -305,18 +316,19 @@ namespace MvcThuVien.Controllers
         }
         #endregion
         #region PhieuMuon
-        public ActionResult PhieuMuon(int? page)
+        public ActionResult PhieuMuon(/*int? page*/)
         {
             if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
             {
                 return RedirectToAction("Login", "Admin");
             }
-            int pageNumber = (page ?? 1);
-            int pageSize = 7;
-            return View(data.PhieuMuonSaches.ToList().OrderBy(n => n.MaPhieuMuon).ToPagedList(pageNumber, pageSize));
+            //int pageNumber = (page ?? 1);
+            //int pageSize = 7;
+            //return View(data.PhieuMuonSaches.ToList().OrderBy(n => n.MaPhieuMuon).ToPagedList(pageNumber, pageSize));
+            return View(data.PhieuMuonSaches.ToList());
         }
         public ActionResult ChitietPhieumuon(int id)
-        {           
+        {
             PhieuMuonSach pms = data.PhieuMuonSaches.SingleOrDefault(n => n.MaPhieuMuon == id);
             ViewBag.MaPhieuMuon = pms.MaPhieuMuon;
             if (pms == null)
@@ -354,9 +366,49 @@ namespace MvcThuVien.Controllers
         }
         #endregion
         #region CTPhieuMuon
-        public ActionResult CTPhieuMuon()
-        {             
-            return View();
+        public ActionResult CTPhieuMuon(/*int? page*/)
+        {
+            if (Session["TaikhoanAdmin"] == null || Session["TaikhoanAdmin"].ToString() == "")
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            //int pageNumber = (page ?? 1);
+            //int pageSize = 7;
+            //return View(data.CTPhieuMuons.ToList().OrderBy(n => n.MaPhieuMuon).ToPagedList(pageNumber, pageSize));
+            return View(data.CTPhieuMuons.ToList());
+        }
+        [HttpGet]
+        public ActionResult XoaCTPhieumuon(int idPhieu, int idSach)
+        {
+            //CTPhieuMuon ctpms = data.CTPhieuMuons.SingleOrDefault(n => n.MaPhieuMuon == id);
+            //CTPhieuMuon ctpms = data.CTPhieuMuons.Where(n => n.MaPhieuMuon == id).SingleOrDefault();
+
+            CTPhieuMuon ctpms = data.CTPhieuMuons.Where(n => n.MaPhieuMuon == idPhieu && n.MaSach == idSach).SingleOrDefault();
+
+            ViewBag.MaPhieuMuon = ctpms.MaPhieuMuon;
+            if (ctpms == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            return View(ctpms);
+        }
+        [HttpPost, ActionName("XoaCTPhieumuon")]
+        public ActionResult XacnhanxoaCTPhieumuon(int idPhieu, int idSach)
+        {
+            //CTPhieuMuon ctpms = data.CTPhieuMuons.SingleOrDefault(n => n.MaPhieuMuon == id);
+
+            CTPhieuMuon ctpms = data.CTPhieuMuons.Where(n => n.MaPhieuMuon == idPhieu && n.MaSach == idSach).SingleOrDefault();
+
+            ViewBag.MaPhieuMuon = ctpms.MaPhieuMuon;
+            if (ctpms == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            data.CTPhieuMuons.Remove(ctpms);
+            data.SaveChanges();
+            return RedirectToAction("PhieuMuon");
         }
         #endregion
     }

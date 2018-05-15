@@ -19,5 +19,7 @@ namespace MvcThuVien.Models
 
         [StringLength(50)]
         public string Hoten { get; set; }
+
+        public bool Permission { get; set; }
     }
 }

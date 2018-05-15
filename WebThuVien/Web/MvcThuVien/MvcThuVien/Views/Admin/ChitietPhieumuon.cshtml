@@ -48,26 +48,28 @@
     <p>
         @Html.ActionLink("VỀ TRANG QUẢN LÝ PHIẾU MƯỢN", "PhieuMuon")
     </p>
-    <table>
-        <tr>
+    
+    <br />
+    <table border="1">
+        <tr>   
             <th style="width:200px">
                 Mã phiếu mượn
-            </th>
+            </th>       
             <th style="width:200px">
                 Tên sách
             </th>
             <th style="width:200px">
                 Số lượng 
             </th>
-            <th></th>
+            <th style="width:200px">Action (Xóa)</th>
         </tr>
 
         @foreach (var item in Model.CTPhieuMuons)
         {
-            <tr>
+            <tr>   
                 <td>
-                    @Html.DisplayFor(modelItem => item.PhieuMuonSach.MaPhieuMuon)
-                </td>
+                    @Html.DisplayFor(modelItem => item.MaPhieuMuon)
+                </td>            
                 <td>
                     @Html.DisplayFor(modelItem => item.Sach.TenSach)
                 </td>
@@ -75,9 +77,7 @@
                     @Html.DisplayFor(modelItem => item.SoLuong)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("XÓA", "XoaCTPhieuMuon", new {  @idPhieu = item.MaPhieuMuon, @idSach = item.MaSach  })
                 </td>
             </tr>
         }
